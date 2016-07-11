@@ -5,7 +5,14 @@ angular.module('fullStackTemplate')
   console.log('profileCtrl');
   $scope.quoteSearch = false;
 
-  $scope.users = dbUsers;
+  let getProfile = () => {
+    Auth.getProfile()
+    .then(res=> $scope.profile = res.data)
+    .catch(err=> $scope.profile = err);
+  };
+
+
+  $scope.account = dbProfile.data;
   $scope.profile = dbProfile.data;
   // $scope.watchlist = dbWatchlist;
 
@@ -16,11 +23,10 @@ angular.module('fullStackTemplate')
     .catch(err=> $scope.quote = err);
   };
 
-
   $scope.addToWL = quoteObj => {
     $scope.quoteSearch = false;
     Stock.addToWL(quoteObj, $stateParams.id)
-    .then(res=> console.log('awesome: ', res.data))
+    .then(res=> getProfile())
     .catch(err=> console.log('error: ', err));
   };
 
