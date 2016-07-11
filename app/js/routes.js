@@ -74,6 +74,10 @@ angular.module('fullStackTemplate')
         return Auth.getUsers()
         .then(res=> $q.resolve(res.data))
         .catch(err=> $q.reject(err))
+      },
+      dbWatchlist   :     function(Stock, $q, $stateParams){
+        return Stock.getWL($stateParams.id)
+        .then()
       }
     }
   });
@@ -108,7 +112,9 @@ angular.module('fullStackTemplate')
 });
 
 
-// angular.module('fullStackTemplate')               // this is the alternative way of configuring oAuth without satellizer. (SEUDO CODE)
+// this is the alternative way of configuring oAuth without satellizer. (SEUDO CODE)
+//
+// angular.module('fullStackTemplate')
 // .factory('httpInterceptor', function($q, Auth){
 //   return {
 //     request : function(config){

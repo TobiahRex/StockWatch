@@ -11,6 +11,8 @@ const BCRYPT      = require('bcryptjs');
 const JWT_SECRET  = process.env.JWT_SECRET;
 const ObjectId    = mongoose.Schema.Types.ObjectId;
 const Mail        = require('./mail');
+const Stock       = require('./stock');
+const Async       = require('async');
 
 
 let commentLikeSchema = new mongoose.Schema({
@@ -63,6 +65,10 @@ let messageSchema = new mongoose.Schema({
   Replies   : [replySchema]
 });
 let userSchema = new mongoose.Schema({
+  Stocks   :    [{
+    type        :   ObjectId,
+    ref         :   'Stock'
+  }],
   Admin    :   {
     type        :   Boolean,
     default     :   false
@@ -280,6 +286,63 @@ userSchema.statics.addComment = (reqBody ,cb) => {
   });
 };
 
+// Stocks
+userSchema.statics.addToWL = (quoteObj, userId, cb) => {
+  if(!quoteObj) return cb({ERROR : 'Did not provide necessary quote.'});
+  User.findById(userId, (err1, dbUser)=> {
+    Stock.create(quoteObj, (err2, savedQuote)=>{
+      if(err1 || err2) return cb(err1 || err2);
+      dbUser.Stocks.push(savedQuote._id);
+      dbUser.save(err=> {
+        err ? cb(err) :
+        User.findById(dbUser._id, (err, updatedUser)=>{
+          err ? cb(err) : cb(null, updatedUser);
+        });
+      });
+    });
+  });
+};
+
+userSchema.statics.removeQuote = (stockObj, userId, cb) => {
+  if(!userId) return cb({ERROR : 'Did not provide user id.'});
+  User.findById(userId, (err, dbUser)=>{
+    dbUser.Stocks.forEeach((stock, i)=>stock.Symbol === stockObj.Symbol ? Stocks.splice(i, 1) : stock );
+    dbUser.save((err, savedUser)=> err ? cb(err) : cb(null, savedUser));
+  });
+};
+
+userSchema.statics.updateWL = (userId, cb) => {
+  if(!userid) return cb({ERROR : 'Did not provide User id.'});
+  User.findById(userId, (err, dbUser)=>{
+    let freshQuotes = [];
+    Asynch.each(dbUser.Stocks, (Stock, cb)=>{
+      Stock.getQuote(Stock.Symbol, (err, freshQuote)=>{
+        if(err) return cb(err);
+        freshQuotes.push(freshQuote);
+      })
+    }, err=>{
+      err ? cb(err) : cb(freshQuotes);
+    });
+  });
+};
+
+userSchema.statics.removeWL = (userId, cb) => {
+  if(!userId) return cb({ERROR : 'Did not provide user id.'});
+  User.findByIdAndUpdate(userId, {$set : {Stocks : []}}, {new : true}, (err, savedUser)=>{
+    err ? cb(err) : cb(null, savedUser);
+  });
+};
+
 
 let User = mongoose.model('User', userSchema);
 module.exports = User;
+
+// async.each(items, function(item, callback){
+//   item.someAsyncCall(function (){
+//       callback();
+//     });
+//   },
+//   function(err){
+//     doSomethingOnceAllAreDone();
+//   }
+// );

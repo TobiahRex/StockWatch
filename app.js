@@ -15,9 +15,6 @@ const cookieParser  = require('cookie-parser');
 const Socket        = require('./server/socket');
 const path          = require('path');
 const mongoose      = require('mongoose');
-const pubnub        = require('pubnub');
-
-console.log(pubnub);
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());

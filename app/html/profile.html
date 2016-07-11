@@ -17,8 +17,8 @@
 <div class="container">
   <div class="col-xs-5 col-xs-offset-4">
     <ul class="profile-tabs nav nav-tabs">
-      <li class="profile-cat lead"><a data-target="#messages" data-toggle="tab" aria-expanded="false">Messages</a></li>
-      <li class="profile-cat lead"><a data-target="#friends" data-toggle="tab" aria-expanded="false">Friends</a></li>
+      <!-- <li class="profile-cat lead"><a data-target="#messages" data-toggle="tab" aria-expanded="false">Messages</a></li> -->
+      <li class="profile-cat lead"><a data-target="#stocks" data-toggle="tab" aria-expanded="false">Stocks</a></li>
       <li class="profile-cat lead"><a data-target="#account" data-toggle="tab" aria-expanded="false">Account</a></li>
     </ul>
   </div>
@@ -27,8 +27,15 @@
     <div class="panel-body lead tab-pane fade" id="messages">
       <p class="lead"><pre>{{profile.messages | json}}</pre></p>
     </div>
-    <div class="panel-body lead tab-pane fade" id="friends">
-      <p class="lead"><pre>{{profile.friends | json}}</pre></p>
+
+    <div class="panel-body lead tab-pane fade" id="stocks">
+      <div class="form-inline text-center">
+        <label for="ticker-symbol" class='control-label'>Stock</label>
+        <input ng-model='symbol' type="text" class="form-control" id='ticker-symbol' placeholder="AAPL or 'Apple'">
+        <button ng-click='getQuote(symbol)' class="btn btn-primary" type="button">Search</button>
+      </div>
+      <br>
+      <p class="lead"><pre>{{profile.Stocks | json}}</pre></p>
     </div>
     <div class="panel-body lead tab-pane fade" id="account">
       <p class="lead"><pre>{{users | json}}</pre></p>

@@ -51,4 +51,12 @@ router.put('/:id/toggle_admin', User.authorize({Admin : true}), (req, res)=>{
 
 router.put('/:id/make_admin', (req, res)=> User.findByIdAndUpdate(req.params.id, {$set : {Admin : true}}, {new : true}, res.handle));
 
+router.route('/:id/quote')
+.post((req, res)=> User.addToWL(req.body, req.params.id, res.handle))
+.delete((req, res)=> User.removeQuote(req.body, req.params.id, res.handle));
+
+router.route('/:id/watchlist')
+.put((req, res)=> User.updateWL(req.params.id, res.handle))
+.delete((req, res)=> User.removeWL(req.params.id, res.handle));
+
 module.exports = router;
