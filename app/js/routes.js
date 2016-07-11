@@ -58,7 +58,7 @@ angular.module('fullStackTemplate')
     controller      :    'forgotController'
   })
   .state('profile', {
-    url             :     '/profile',
+    url             :     '/profile/:id',
     templateUrl     :     'html/profile.html',
     controller      :     'profileController',
     resolve         :     {
@@ -74,10 +74,6 @@ angular.module('fullStackTemplate')
         return Auth.getUsers()
         .then(res=> $q.resolve(res.data))
         .catch(err=> $q.reject(err))
-      },
-      dbWatchlist   :     function(Stock, $q, $stateParams){
-        return Stock.getWL($stateParams.id)
-        .then()
       }
     }
   });

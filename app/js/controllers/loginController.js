@@ -6,9 +6,7 @@ angular.module('fullStackTemplate')
   $scope.loginUser = loginObj => {
     $auth.login(loginObj)
     .then(res => {
-      console.log('res: ', res.data);      
       $scope.$emit('loggedIn');
-      $state.go('profile');
     })
     .catch(err=> {
       console.log('err: ', err);
