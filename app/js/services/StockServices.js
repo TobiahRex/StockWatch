@@ -8,10 +8,10 @@ angular.module('fullStackTemplate')
   this.addToWL = (quoteObj, id) => $http.post(`/api/users/${id}/quote`, quoteObj);
 
   this.removeQuote = (quoteObj, id) => $http.post(`/api/users/${id}/quote`, quoteObj);
-  
+
   this.updateWL = (quoteObj, id) => $http.post(`/api/users/${id}/quote`, quoteObj);
 
   this.removeWL = (quoteObj, id) => $http.post(`/api/users/${id}/quote`, quoteObj);
 
-
+  this.getWL  = id => $http.get(`/api/users/${id}/watchlist`);
 });

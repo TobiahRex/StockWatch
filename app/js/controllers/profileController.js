@@ -11,10 +11,16 @@ angular.module('fullStackTemplate')
     .catch(err=> $scope.profile = err);
   };
 
+  let getWatchlist = id => {
+    Stock.getWL(id)
+    .then(res=> $scope.watchlist = res.data)
+    .catch(res => $scope.watchlist = err);
+  };
+
 
   $scope.account = dbProfile.data;
   $scope.profile = dbProfile.data;
-  // $scope.watchlist = dbWatchlist;
+
 
   $scope.getQuote = symbol => {
     $scope.quoteSearch = true;
@@ -26,12 +32,26 @@ angular.module('fullStackTemplate')
   $scope.addToWL = quoteObj => {
     $scope.quoteSearch = false;
     Stock.addToWL(quoteObj, $stateParams.id)
-    .then(res=> getProfile())
+    .then(res=> {getProfile(); getWatchlist($stateParams.id)}
     .catch(err=> console.log('error: ', err));
   };
 
-  // Stock.removeQuote(quoteObj, $stateParams.id);
-  // Stock.updateWL($stateParams.id)
-  // Stock.removeWL($stateParams.id)
+  $scope.updateWL = () => {
+    Stock.updateWL($stateParams.id)
+    .then(res=> $scope.watchlist = res.data)
+    .catch(res=>$scope.watchlist = err);
+  };
+
+  $scop.dumpWL = () => {
+    Stock.removeWL($stateParams.id)
+    .then(res=> $scope.watchlist = res.data)
+    .catch(err=> $scope.watchlist = err);
+  };
+
+  $scope.removeOne = () => {
+    Stock.removeQuote(quoteObj, $stateParams.id);
+    .then(res=> $scope.watchlist = res.data)
+    .catch(err=> $scope.watchlist = err);
+  };
 
 });

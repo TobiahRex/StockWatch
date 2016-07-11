@@ -56,6 +56,7 @@ router.route('/:id/quote')
 .delete((req, res)=> User.removeQuote(req.body, req.params.id, res.handle));
 
 router.route('/:id/watchlist')
+.get((req, res)=> User.getWL(req.params.id, res.handle))
 .put((req, res)=> User.updateWL(req.params.id, res.handle))
 .delete((req, res)=> User.removeWL(req.params.id, res.handle));
 

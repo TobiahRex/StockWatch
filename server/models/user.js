@@ -333,6 +333,12 @@ userSchema.statics.removeWL = (userId, cb) => {
   });
 };
 
+userSchema.statics.getWL = (userId, cb) => {
+  if(!userId) return cb({ERROR : 'Did not provide user id.'});
+  User.findById(userId).populate('Stocks').exec((err, dbuser)=>{
+    err ? cb(err) : cb(null, dbUser);
+  });
+};
 
 let User = mongoose.model('User', userSchema);
 module.exports = User;
