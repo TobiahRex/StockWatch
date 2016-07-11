@@ -24,4 +24,8 @@ angular.module('fullStackTemplate')
     .catch(err=> console.log('error: ', err));
   };
 
+  // Stock.removeQuote(quoteObj, $stateParams.id);
+  // Stock.updateWL($stateParams.id)
+  // Stock.removeWL($stateParams.id)
+
 });
