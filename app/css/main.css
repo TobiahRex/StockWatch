@@ -7,11 +7,6 @@ div.home-jumbo {
   background-image: url('/css/images/codecode.jpg');
 };
 
-
-hr {
-  border-color: #0F0F0F
-}
-
 a.to-splash {
   color: white;
   background-color: transparent;
@@ -124,3 +119,10 @@ ul.nav.navbar-nav > a {
   background-color: transparent;
   font-size: 18px;
 }
+
+hr {
+  border-color: black;
+}
+ #add-to-watchlist:hover {
+   color: #FFFFFF;
+ }

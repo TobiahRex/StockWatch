@@ -2,7 +2,7 @@
 
 require('dotenv').load();
 const PORT          = process.env.PORT || 3001;
-const MONGO_URL     = process.env.MONGODB_URI || "mongodb://localhost/UserAuthTest";
+const MONGO_URL     = process.env.MONGODB_URI || "mongodb://localhost/StockSearchAPI";
 
 const express       = require('express');
 const router        = express.Router();

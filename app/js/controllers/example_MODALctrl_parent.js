@@ -95,6 +95,7 @@ angular.module('fullStackTemplate')
     });
     modalInstance.result.then(function (editedAlbum) {
       console.log('editedAlbum: ', editedAlbum);
+      -t
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });

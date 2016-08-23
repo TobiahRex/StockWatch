@@ -1,7 +1,4 @@
-'use strict';
-
-angular.module('fullStackTemplate')
-.controller('profileController', function($state, $stateParams, $scope, Auth, dbProfile, dbUsers, Stock){
+function profileController($state, $stateParams, $scope, Auth, dbProfile, dbUsers, Stock) {
   console.log('profileCtrl');
   $scope.quoteSearch = false;
 
@@ -32,7 +29,10 @@ angular.module('fullStackTemplate')
   $scope.addToWL = quoteObj => {
     $scope.quoteSearch = false;
     Stock.addToWL(quoteObj, $stateParams.id)
-    .then(res=> {getProfile(); getWatchlist($stateParams.id)}
+    .then(res=> {
+      getProfile();
+      getWatchlist($stateParams.id);
+    })
     .catch(err=> console.log('error: ', err));
   };
 
@@ -42,16 +42,17 @@ angular.module('fullStackTemplate')
     .catch(res=>$scope.watchlist = err);
   };
 
-  $scop.dumpWL = () => {
+  $scope.dumpWL = () => {
     Stock.removeWL($stateParams.id)
     .then(res=> $scope.watchlist = res.data)
     .catch(err=> $scope.watchlist = err);
   };
 
   $scope.removeOne = () => {
-    Stock.removeQuote(quoteObj, $stateParams.id);
+    Stock.removeQuote(quoteObj, $stateParams.id)
     .then(res=> $scope.watchlist = res.data)
     .catch(err=> $scope.watchlist = err);
   };
+}
 
-});
+angular.module('fullStackTemplate').controller('profileController', profileController);
