@@ -29,10 +29,10 @@ app.use((req, res, next) => {
 app.use('/api', require('./server/routes/api'));
 app.use('/',    require('./server/routes/index'));
 
-io.on('connection', (socket) => {
-  console.log('Client Connected @', socket.handshake.address);
-  Socket.init(io, socket);
-});
+// io.on('connection', (socket) => {
+//   console.log('Client Connected @', socket.handshake.address);
+//   Socket.init(io, socket);
+// });
 
 server.listen(PORT, err => console.log(err || `Server @ PORT ${PORT}`));
 mongoose.connect(MONGO_URL, err => console.log(err || `MONGOdb @ ${MONGO_URL}`));
